@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Financier Details</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .step-indicator span {
+      font-weight: bold;
+      border-bottom: 2px solid #ddd;
+      padding: 5px 10px;
+    }
+
+    .active {
+      color: #343a40;
+      border-bottom-color: #343a40;
+    }
+
+    .form-container {
+      display: none;
+    }
+
+    .current-form {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #343a40;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #343a40;
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #23272b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Add Financier Details</h1>
+    <div class="step-indicator">
+      <span class="active">1. User Details</span>
+      <span>2. Region & Location</span>
+      <span>3. Documents</span>
+      <span>4. Images & Videos</span>
+    </div>
+
+    <div class="form-container current-form" id="user-details">
+      <div class="form-group">
+        <label for="finance_name">Finance Name (Max 50 characters):</label>
+        <input type="text" id="finance_name" name="finance_name" maxlength="50" required>
+      </div>
+      <div class="form-group">
+        <label for="contact_name">Contact Name:</label>
+        <input type="text" id="contact_name" name="contact_name" maxlength="50" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required>
+      </div>
+      <button onclick="nextStep('region-location')">Next</button>
+    </div>
+
+    <div class="form-container" id="region-location">
+      <div class="form-group">
+        <label for="region">Region:</label>
+        <input type="text" id="region" name="region" required>
+      </div>
+      <div class="form-group">
+        <label for="location">Location:</label>
+        <select name="location" id="location" required>
+          <option value="">Select a choice </option>
+          <option value="maharashtra">Maharashtra</option>
+  <option value="mumbai">Mumbai</option>
+  <option value="pune">Pune</option>
+  <option value="satara">Satara</option>
+  <option value="sangli">Sangli</option>
+        </select>
+      </div>
+      <button onclick="nextStep('documents')">Next</button>
+    </div>
+
+    <div class="form-container" id="documents">
+      <div class="form-group">
+        <label for="certificate">Upload Certificate:</label>
+        <input type="file" id="certificate" name="certificate" accept=".pdf,.doc,.docx" required>
+      </div>
+      <div class="form-group">
+        <label for="license">Upload License (Optional):</label>
+        <input type="file" id="license" name="license" accept=".pdf,.doc,.docx">
+      </div>
+      <button onclick="nextStep('images-videos')">Next</button>
+    </div>
+
+    <div class="form-container" id="images-videos">
+      <div class="form-group">
+        <label for="logo">Upload Logo:</label>
+        <input type="file" id="logo" name="logo" accept=".jpg,.jpeg,.png" required>
+      </div>
+      <div class="form-group">
+        <label for="photo">Upload Photo (Optional):</label>
+        <input type="file" id="photo" name="photo" accept=".jpg,.jpeg,.png">
+      </div>
+      <div class="form-group">
+        <label for="video">Upload Video (Optional):</label>
+        <input type="file" id="video" name="video" accept=".mp4,.mov,.avi">
+      </div>
+      <button onclick="submitForm()">Submit</button>
+    </div>
+
+    <script>
+      function nextStep(stepId) {
+        
+        const currentForm = document.querySelector('.current-form');
+        currentForm.classList.remove('current-form');
+
+      
+        const nextForm = document.getElementById(stepId);
+        nextForm.classList.add('current-form');
+
+       
+        const steps = document.querySelectorAll('.step-indicator span');
+        for (let i = 0; i < steps.length; i++) {
+          steps[i].classList.remove('active');
+        }
+        document.getElementById(stepId).classList.add('active');
+      }
+
+      function submitForm() {
+      
+        alert('Form submitted successfully!');
+      }
+    </script>
+  </div>
+</body>
+</html>
