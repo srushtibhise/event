@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Collaborative Sketching</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        canvas {
+            border: 2px solid #333;
+            background-color: #fff;
+            cursor: crosshair;
+            touch-action: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="sketchCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('sketchCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        canvas.addEventListener('touchstart', handleTouchStart);
+        canvas.addEventListener('touchmove', handleTouchMove);
+        canvas.addEventListener('touchend', handleTouchEnd);
+        canvas.addEventListener('touchcancel', handleTouchCancel);
+
+        function handleTouchStart(event) {
+            event.preventDefault();
+            isDrawing = true;
+            startDrawing(event.touches[0]);
+        }
+
+        function handleTouchMove(event) {
+            event.preventDefault();
+            if (isDrawing) {
+                draw(event.touches[0]);
+            }
+        }
+
+        function handleTouchEnd(event) {
+            event.preventDefault();
+            isDrawing = false;
+            ctx.beginPath();
+        }
+
+        function handleTouchCancel(event) {
+            event.preventDefault();
+            isDrawing = false;
+            ctx.beginPath();
+        }
+
+        function startDrawing(touch) {
+            const x = touch.clientX - canvas.getBoundingClientRect().left;
+            const y = touch.clientY - canvas.getBoundingClientRect().top;
+
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = getRandomColor();
+
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function draw(touch) {
+            const x = touch.clientX - canvas.getBoundingClientRect().left;
+            const y = touch.clientY - canvas.getBoundingClientRect().top;
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>
